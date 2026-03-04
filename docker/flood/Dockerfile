@@ -1,20 +1,18 @@
 FROM debian:12
 
-RUN apt update && \
-        apt-get install -y \
-        curl
+RUN apt-get update && \
+    apt-get install -y curl
 
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh && \
-    bash nodesource_setup.sh
+# Add NodeSource Node.js 22.x repo
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh && \
+    bash nodesource_setup.sh && \
+    apt-get update
 
-RUN apt install -y \
-        nodejs \
-        git \
-        jq \
-        && rm -rf /var/lib/apt/lists/*
+# Install Node.js 22 (npm inclus), git et jq
+RUN apt-get install -y nodejs git jq && rm -rf /var/lib/apt/lists/*
 
-# install flood
-RUN npm install --global flood
+# install flood (version spécifique)
+RUN npm install --global flood@4.13.0
 
 # Create the database directory if it doesn't exist
 RUN mkdir -p /data/flood/db

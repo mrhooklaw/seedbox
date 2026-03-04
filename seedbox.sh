@@ -32,6 +32,11 @@ function boot() {
       run $services
       ;;
 
+    logs)
+      services=$2;
+      logs $services
+      ;;
+
     *)
       help
       ;;
@@ -70,6 +75,17 @@ function stop() {
   command=$(get_docker_compose_command);
 
   eval "${command} stop ${containers} && ${command} rm -f ${containers}";
+}
+
+# display container logs
+function logs() {
+  if [[ $1 == '' ]]; then
+    containers=$(get_containers all)
+  else
+    containers=$(get_containers $1)
+  fi
+  command=$(get_docker_compose_command)
+  eval "${command} logs -f ${containers}"
 }
 
 

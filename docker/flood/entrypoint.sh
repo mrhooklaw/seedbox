@@ -23,7 +23,7 @@ authenticate_flood() {
   JWT=$(curl -i -XPOST http://127.0.0.1:3000/api/auth/authenticate \
       -H 'Content-Type: application/json' \
       -d '{"username":"admin", "password":"dcb983c9-1dcd-4396-998c-891931ec252b"}' \
-      | grep Set-Cookie \
+      | grep set-cookie \
       | grep -o 'jwt[^;]*')
 
   if [ -z "$JWT" ]; then
