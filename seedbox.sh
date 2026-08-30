@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Hello world!"
+
 # exit when any command fails
 set -e
 
